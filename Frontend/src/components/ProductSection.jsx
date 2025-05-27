@@ -5,6 +5,8 @@ import thumb3 from '../assets/images/thumb3.jpg';
 import ps_video from '../assets/ps_vid.mp4';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useCart } from '../context/CartContext.jsx';
+import { toast } from 'react-hot-toast';
 
 const ProductSection = () => {
   const navigate = useNavigate();
@@ -12,6 +14,17 @@ const ProductSection = () => {
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
+  };
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size!');
+      return;
+    }
+    addToCart({ id: 'product-id', name: 'Wool Jacket', price: 7999, size: selectedSize });
+    toast.success('Item added to cart!');
   };
 
   return (
@@ -75,7 +88,7 @@ const ProductSection = () => {
 
           {/* Buttons */}
           <div className="flex gap-4 mt-6">
-            <button className="w-full border border-black text-black py-2 rounded-md hover:bg-gray-100">
+            <button onClick={handleAddToCart} className="w-full border border-black text-black py-2 rounded-md hover:bg-gray-100">
               Add to Cart
             </button>
             <button onClick={() => navigate('/buy')} className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800">

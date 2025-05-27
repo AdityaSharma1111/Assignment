@@ -5,6 +5,8 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 import { createRoutesFromElements, Route } from 'react-router-dom'
 import App from './App.jsx'
 import { About, Cart, Buy, Waitlist, Home } from './components/index.js'
+import { CartProvider } from './context/CartContext.jsx'
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +28,9 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <CartProvider>
+      <Toaster position="top-center" />
+      <RouterProvider router={router} />
+    </CartProvider>
   </StrictMode>,
 )
